@@ -8,6 +8,7 @@
   - [Database Schema](#database-schema)
   - [About Laravel](#about-laravel)
   - [Installation](#installation)
+  - [Filament Admin Template](#filament-admin-template)
   - [Features](#features)
   - [Contribution](#contribution)
   - [License](#license)
@@ -39,7 +40,7 @@ Laravel is a PHP framework that is elegant and expressive, designed to make web 
 2. Navigate to the project directory.
 
     ```bash
-    cd laravel-tugas1sbd-filamen
+    cd laravel-tugas1sbd-filament
     ```
 
 3. Install dependencies using Composer.
@@ -74,11 +75,55 @@ Laravel is a PHP framework that is elegant and expressive, designed to make web 
     php artisan serve
     ```
 
+9. Visit
+
+   ```bash
+    http://127.0.0.1:8000/admin
+    ```
+
+10. Use the following credentials to log in:
+    - Email: `ilham@admin.com`
+    - Password: `SecretPass`
+
+Note : You can edit in
+
+  ```bash
+  database\seeders\DatabaseSeeder.php
+  ```
+  
+## Filament Admin Template
+
+This project utilizes the Filament admin template for creating an intuitive and user-friendly admin panel. Filament is a powerful tool for quickly generating administrative interfaces. For more information about Filament, visit the [Filament documentation](https://filamentphp.com/docs).
+
+To install Filament, follow these steps:
+
+1. Install Filament using Composer:
+
+    ```bash
+    composer require filament/filament
+    ```
+
+2. Publish the Filament configuration:
+
+    ```bash
+    php artisan vendor:publish --tag=filament-config
+    ```
+
+3. Configure Filament by editing the `config/filament.php` file as needed.
+
+4. Create Filament resources and pages using artisan commands, for example:
+
+    ```bash
+    php artisan make:filament-resource Post
+    ```
+
 ## Features
 
 - CRUD (Create, Read, Update, Delete) operations for the main entity.
 - User input validation.
 - Middleware for user authentication.
+- Admin panel using Filament template.
+- Database seeder for initial admin user.
 
 ## Contribution
 
