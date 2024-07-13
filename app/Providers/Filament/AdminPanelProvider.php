@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green, //change the color
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -64,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
-            // ->navigationGroups($this->getNavigationGroups()); // Menggunakan navigationGroups
+            // ->navigationGroups($this->getNavigationGroups()); // use navigationGroups
     }
 
     // public function getNavigationGroups(): array
@@ -73,7 +73,7 @@ class AdminPanelProvider extends PanelProvider
     //         // Group: Dashboard
     //         NavigationGroup::make('Dashboard')
     //             ->items([
-    //                 Pages\Dashboard::class, // Menambahkan Dashboard ke navigasi
+    //                 Pages\Dashboard::class, // add Dashboard ke navigation
     //             ]),
 
     //         // Group 1: Customers and Users
