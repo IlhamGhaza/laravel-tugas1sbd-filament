@@ -64,40 +64,5 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
-            // ->navigationGroups($this->getNavigationGroups()); // use navigationGroups
     }
-
-    // public function getNavigationGroups(): array
-    // {
-    //     return [
-    //         // Group: Dashboard
-    //         NavigationGroup::make('Dashboard')
-    //             ->items([
-    //                 Pages\Dashboard::class, // add Dashboard ke navigation
-    //             ]),
-
-    //         // Group 1: Customers and Users
-    //         NavigationGroup::make('Customers and Users')
-    //             ->items([
-    //                 UserResource::getNavigation(),
-    //                 CustomerResource::getNavigation(),
-    //                 CourierResource::getNavigation(),
-    //             ]),
-
-    //         // Group 2: Flowers
-    //         NavigationGroup::make('Flowers')
-    //             ->items([
-    //                 FlowerArrangementResource::getNavigation(),
-    //             ]),
-
-    //         // Group 3: Orders and Deliveries
-    //         NavigationGroup::make('Orders and Deliveries')
-    //             ->items([
-    //                 OrderResource::getNavigation(),
-    //                 OrderDetailResource::getNavigation(),
-    //                 PaymentResource::getNavigation(),
-    //                 DeliveryResource::getNavigation(),
-    //             ]),
-    //     ];
-    //}
 }
