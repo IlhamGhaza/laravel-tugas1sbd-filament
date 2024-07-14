@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('flower_arrangements', function (Blueprint $table) {
             $table->id('arrangement_id');
             $table->string('name');
+            $table->string('image');
             $table->string('type');
             $table->text('description');
-            $table->string('image');
             $table->string('size');
-            $table->decimal('price', 8, 2);
+            $table->decimal('price', 13, 2);
             $table->softDeletes();
             $table->timestamps();
         });

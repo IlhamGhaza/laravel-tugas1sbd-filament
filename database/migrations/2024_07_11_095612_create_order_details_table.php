@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('arrangement_id');
             $table->integer('quantity');
-            $table->decimal('unit_price', 8, 2);
-            $table->decimal('sub_total', 8, 2);
+            $table->decimal('unit_price', 13, 2);
+            $table->decimal('sub_total', 13, 2);
 
             $table->foreign('order_id')->references('order_id')->on('orders');
             $table->foreign('arrangement_id')->references('arrangement_id')->on('flower_arrangements');

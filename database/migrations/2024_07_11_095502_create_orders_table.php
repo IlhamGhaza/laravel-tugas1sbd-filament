@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('order_id');
             $table->string('order_number');
             $table->date('order_date');
-            $table->decimal('total_price', 8, 2);
+            $table->decimal('total_price', 13, 2);
             $table->unsignedBigInteger('customer_id');
             $table->decimal('discount', 5, 2)->nullable();
             // $table->unsignedBigInteger('payment_id');
