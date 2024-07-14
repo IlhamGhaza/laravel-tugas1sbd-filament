@@ -15,14 +15,15 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-
+use Filament\Tables\Filters\SelectFilter;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
-    
+    protected static ?string $navigationGroup = 'User Manajement';
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -58,10 +59,24 @@ class UserResource extends Resource
 
                 TextColumn::make('role')
                     ->searchable(isIndividual:true, isGlobal:true)
+                    ->badge()
+                    ->color(function (string $state): string{
+                        return match($state){
+                            'admin' => 'danger', //red
+                            'staff' => 'warning',
+                            'user' => 'info',
+                            // default => 'gray',
+                        };
+                    })
                     ->sortable(),
             ])
             ->filters([
-                //
+                //role admin,staff,user
+                // SelectFilter::make('role')->options([
+                //     'admin' => 'admin',
+                //     'staff'=>'staff',
+                //     'user'=>'user'
+                // ]),
             ])
             ->actions([
                 // Tables\Actions\ExportAction::make(),

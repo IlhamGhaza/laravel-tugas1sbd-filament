@@ -21,6 +21,9 @@ class OrderDetailResource extends Resource
     protected static ?string $model = OrderDetail::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationGroup = 'Order Manajement';
+    protected static ?int $navigationSort = 6;
+
 
     public static function form(Form $form): Form
     {
@@ -33,6 +36,7 @@ class OrderDetailResource extends Resource
                     ->searchable(),
                 Select::make('arrangement_id')
                     ->relationship('arrangement', 'name')
+                    ->multiple()
                     ->required()
                     ->searchable(),
                 TextInput::make('quantity')

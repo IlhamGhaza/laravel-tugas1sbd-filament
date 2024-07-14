@@ -7,12 +7,14 @@ use App\Filament\Resources\FlowerArrangementResource\RelationManagers;
 use App\Models\FlowerArrangement;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -22,6 +24,9 @@ class FlowerArrangementResource extends Resource
     protected static ?string $model = FlowerArrangement::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+    protected static ?string $navigationGroup = 'Warehouse';
+    protected static ?int $navigationSort = 4;
+
 
     public static function form(Form $form): Form
     {
@@ -32,6 +37,9 @@ class FlowerArrangementResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->minLength(3),
+                FileUpload::make('image')
+                        ->image()
+                        ->required(),
                 TextInput::make('type')
                     ->required()
                     ->maxLength(255)
@@ -40,16 +48,18 @@ class FlowerArrangementResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->minLength(10),
-                FileUpload::make('image')
-                    ->image(),
-                TextInput::make('size')
-                    ->required()
-                    ->minLength(1),
+                Select::make('size')
+                    ->options([
+                        'small' => 'Small',
+                        'medium' => 'Medium',
+                        'large' => 'Large',
+                        'extra large' => 'Extra Large',
+                    ])
+                    ->required(),
                 TextInput::make('price')
                     ->required()
-                    ->minLength(1)
                     ->numeric()
-                    ->minValue(1000),
+                    ->minValue(10000),
             ]);
     }
 
@@ -62,6 +72,8 @@ class FlowerArrangementResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
+                //image
+                ImageColumn::make('image'),
                 TextColumn::make('type')
                     ->searchable()
                     ->sortable()
@@ -70,9 +82,7 @@ class FlowerArrangementResource extends Resource
                     ->searchable()
                     ->sortable()
                     ->toggleable(),
-                //image
-                ImageColumn::make('image')
-                    ->searchable(),
+
                 TextColumn::make('size')
                     ->searchable()
                     ->sortable()
@@ -83,7 +93,23 @@ class FlowerArrangementResource extends Resource
                     ->toggleable(),
             ])
             ->filters([
-                //
+                //flower size 'small', 'medium','extra large'
+                // SelectFilter::make('size')
+                //     ->options([
+                //         'small' => 'Small',
+                //         'medium' => 'Medium',
+                //         'large' => 'Large',
+                //         'extra large' => 'Extra Large',
+                //     ]),
+                // //price
+                // SelectFilter::make('price')
+                // ->query(fn (Builder $query): Builder => $query->where('price', '>=', 10000))
+                //     ->options([
+                //         '10000' => '10000',
+                //         '20000' => '20000',
+                //         '30000' => '30000',
+                //         '40000' => '40000',
+                //     ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

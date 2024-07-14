@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +24,9 @@ class CustomerResource extends Resource
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $navigationGroup = 'User Manajement';
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -64,10 +68,23 @@ class CustomerResource extends Resource
                 ->searchable()->toggleable()->sortable(),
 
                 TextColumn::make('status')
-                ->searchable()->toggleable()->sortable(),
+                ->searchable()->toggleable()->sortable()
+                ->badge()
+                ->color(function (string $state): string{
+                    return match($state){
+                        'regular' => 'success', //green
+                        'non-regular' => 'info',
+                        // default => 'gray',
+                    };
+                }),
             ])
             ->filters([
-                //
+                //status reguler, non-reguler
+                // SelectFilter::make('status')->options([
+                //     'regular' => 'Regular',
+                //     'non-regular' => 'Non-regular',
+                // ]),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
