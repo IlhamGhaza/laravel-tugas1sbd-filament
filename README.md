@@ -114,7 +114,7 @@ To install Filament, follow these steps:
 4. Create Filament resources and pages using artisan commands, for example:
 
     ```bash
-    php artisan make:filament-resource Post
+     php artisan make:filament-resource Post <!--//(from your model) -->
     ```
 
 ## Features
