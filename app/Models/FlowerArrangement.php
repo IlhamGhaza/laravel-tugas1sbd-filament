@@ -10,7 +10,7 @@ class FlowerArrangement extends Model
 {
     use HasFactory, SoftDeletes;
     protected $primaryKey = 'arrangement_id';
-    protected $fillable = ['name', 'type', 'description','image', 'size', 'price'];
+    protected $fillable = ['name','image', 'type', 'description', 'size', 'price'];
 
     public function orderDetails()
     {
