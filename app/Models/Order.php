@@ -14,7 +14,7 @@ class Order extends Model
 
     protected $primaryKey = 'order_id';
 
-    protected $fillable = ['order_number', 'order_date', 'total_price', 'customer_id'];
+    protected $fillable = ['order_number', 'customer_id', 'order_date', 'total_price'];
 
     public function customer()
     {
@@ -41,10 +41,10 @@ class Order extends Model
 
             if ($customer->status === 'regular') {
                 // Apply 10% discount for regular customers
-                $order->discount = $order->total_price * 0.10;
+                $order->discount = round($order->total_price * 0.10, 2);
             } elseif ($customer->status === 'non-regular' && $order->total_price >= 1000000) {
                 // Apply 5% discount for non-regular customers with high order value
-                $order->discount = $order->total_price * 0.05;
+                $order->discount = round($order->total_price * 0.05, 2);
             } else {
                 // No discount for non-regular customers below the threshold
                 $order->discount = 0;
