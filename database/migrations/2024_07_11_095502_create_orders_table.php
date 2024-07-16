@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('order_id');
             $table->string('order_number');
+            $table->unsignedBigInteger('customer_id');
             $table->date('order_date');
             $table->decimal('total_price', 13, 2);
-            $table->unsignedBigInteger('customer_id');
-            $table->decimal('discount', 5, 2)->nullable();
+            $table->decimal('discount', 12, 2)->nullable();
             // $table->unsignedBigInteger('payment_id');
 
             $table->foreign('customer_id')->references('id')->on('customers');
