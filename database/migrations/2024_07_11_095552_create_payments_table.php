@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('payment_date');
             $table->decimal('total_payment', 13, 2);
             $table->string('payment_method');
+            $table->string('payment_status');
 
             $table->foreign('order_id')->references('order_id')->on('orders');
 
