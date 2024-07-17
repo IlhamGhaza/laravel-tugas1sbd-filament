@@ -14,6 +14,7 @@ class FlowerArrangement extends Model
 
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class, 'arrangement_id', 'arrangement_id');
+        // return $this->hasMany(OrderDetail::class, 'arrangement_id', 'arrangement_id');
+        return $this->hasMany(OrderDetail::class);
     }
 }
