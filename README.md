@@ -10,6 +10,8 @@
   - [Installation](#installation)
   - [Filament Admin Template](#filament-admin-template)
   - [Features](#features)
+  - [ScreenShoot](#screenshoot)
+  - [Contact](#contact)
   - [Contribution](#contribution)
   - [License](#license)
   
@@ -90,6 +92,13 @@ Note : You can edit in
   ```bash
   database\seeders\DatabaseSeeder.php
   ```
+
+  if composer trouble run this command
+  
+  ```bash
+    composer update
+    composer dump-autoload
+   ```
   
 ## Filament Admin Template
 
@@ -100,7 +109,7 @@ To install Filament, follow these steps:
 1. Install Filament using Composer:
 
     ```bash
-    composer require filament/filament
+    composer require filament/filament="3.2.57" -W
     ```
 
 2. Publish the Filament configuration:
@@ -111,11 +120,13 @@ To install Filament, follow these steps:
 
 3. Configure Filament by editing the `config/filament.php` file as needed.
 
-4. Create Filament resources and pages using artisan commands, for example:
+4. Create Filament resources and pages using Artisan commands. For instance, to generate resources like a Post resource (assuming Post is your model):
 
     ```bash
      php artisan make:filament-resource Post <!--//(from your model) -->
     ```
+
+   For beginners looking for a step-by-step guide, check out this [tutorial video for beginner](https://youtube.com/playlist?list=PLqDySLfPKRn6fgrrdg4_SmsSxWzVlUQJo&si=GhXQaFVjgIB1pSbu)
 
 ## Features
 
@@ -124,6 +135,15 @@ To install Filament, follow these steps:
 - Middleware for user authentication.
 - Admin panel using Filament template.
 - Database seeder for initial admin user.
+- API with laravel-orion
+
+## ScreenShoot
+
+![ScreenShoot](public/screen.png)
+
+## Contact
+
+For any questions or issues, please open an issue on this repository or contact the project maintainer directly.
 
 ## Contribution
 
