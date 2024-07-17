@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         \App\Models\Courier::factory()->create([
-            'name' => 'John Doe',
+            'name' => 'Johnnn',
             'phone' => '555-1234',
         ]);
 
