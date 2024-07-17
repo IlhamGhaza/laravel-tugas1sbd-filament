@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController as ApiAuthController;
+use App\Http\Controllers\Api\FlowerArrangementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FlowerController;
 use Illuminate\Http\Request;
@@ -10,15 +12,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //auth
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/register', [ApiAuthController::class, 'register']);
+Route::post('/login', [ApiAuthController::class, 'login']);
+Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
 
 //flower api
-Route::get('/flower', [FlowerController::class, 'index'])->middleware('auth:sanctum');
-Route::post('/flower/{id}', [FlowerController::class, 'store'])->middleware('auth:sanctum');
-Route::delete('/flower/{id}', [FlowerController::class, 'destroy'])->middleware('auth:sanctum');
-Route::put('/flower/{id}', [FlowerController::class, 'update'])->middleware('auth:sanctum');
-Route::apiResource('flower', FlowerController::class)->middleware('auth:sanctum');
+Route::resource('flower-arrangements', FlowerArrangementController::class)
+// ->except(['create', 'edit'])
+->middleware('auth:sanctum');
+
 
 
