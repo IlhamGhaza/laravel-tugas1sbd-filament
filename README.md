@@ -151,5 +151,5 @@ If you wish to contribute to this project, please fork this repository and submi
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. You may not use this project for commercial purposes. See the [LICENSE](LICENSE) file for more details.
+
