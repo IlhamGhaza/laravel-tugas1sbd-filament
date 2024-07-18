@@ -14,27 +14,23 @@ class Order extends Model
 
     protected $primaryKey = 'order_id';
 
-    protected $fillable = ['order_number', 'customer_id', 'order_date', 'total_price'];
+    protected $fillable = ['order_number', 'customer_id', 'order_date', 'total_price', 'discount'];
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function orderDetails()
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(OrderDetail::class, 'order_id');
     }
-    //payment
 
-    public function payment(){
-        return $this->hasMany(Payment::class);
-    }
-    public function deliveries()
+    public function payments()
     {
-        return $this->hasMany(Delivery::class, 'order_id');
+        return $this->hasMany(Payment::class, 'order_id');
     }
-        protected static function booted()
+    protected static function booted()
     {
         static::saving(function ($order) {
             $customer = $order->customer;
@@ -51,5 +47,4 @@ class Order extends Model
             }
         });
     }
-
 }
