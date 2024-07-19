@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'type' => 'Spring Collection',
             'description' => 'A beautiful arrangement featuring seasonal spring flowers.',
             'size' => 'Medium',
-            'price' => 45.99,
+            'price' => 50.00,
         ]);
 
         \App\Models\Customer::factory()->create([
@@ -54,6 +54,12 @@ class DatabaseSeeder extends Seeder
             'address' => '456 Elm St, Othercity, USA',
             'phone' => '555-5678',
             'status' => 'non-regular',
+        ]);
+        \App\Models\Customer::factory()->create([
+            'name' => 'Ilham gz',
+            'address' => 'Jalan kayumanis',
+            'phone' => '1236-7979',
+            'status' => 'regular',
         ]);
 
         \App\Models\Courier::factory()->create([
