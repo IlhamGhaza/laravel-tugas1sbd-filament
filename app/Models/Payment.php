@@ -11,10 +11,12 @@ class Payment extends Model
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'payment_id';
-    protected $fillable = ['order_id', 'payment_date', 'total_payment', 'payment_method'];
+
+    protected $fillable = ['order_id', 'payment_date', 'total_payment', 'payment_method','payment_status'];
 
     public function order()
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }
+
