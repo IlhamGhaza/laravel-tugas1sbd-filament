@@ -85,9 +85,9 @@ Laravel is a PHP framework that is elegant and expressive, designed to make web 
 
 10. Use the following credentials to log in:
     - Email: `ilham@admin.com`
-    - Password: `SecretPass`
+    - Password: 12345678
 
-Note : You can edit in
+Note : You can edit in database seeder
 
   ```bash
   database\seeders\DatabaseSeeder.php
