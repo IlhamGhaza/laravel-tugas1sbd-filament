@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id('delivery_id');
             $table->unsignedBigInteger('order_id');
-            $table->text('delivery_address');
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->string('delivery_name')->nullable();
+            $table->text('delivery_address')->nullable();
             $table->date('delivery_date');
             $table->unsignedBigInteger('courier_id');
 
             $table->foreign('order_id')->references('order_id')->on('orders');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('courier_id')->references('courier_id')->on('couriers');
 
             $table->softDeletes();

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('flower_arrangements', function (Blueprint $table) {
             $table->id('arrangement_id');
             $table->string('name');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('type');
             $table->text('description');
             $table->string('size');
