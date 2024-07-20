@@ -3,6 +3,8 @@
 namespace App\Filament\Exports;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\Payment;
 use Filament\Actions\Exports\ExportColumn;
 use Filament\Actions\Exports\Exporter;
 use Filament\Actions\Exports\Models\Export;
@@ -15,9 +17,18 @@ class OrderExporter extends Exporter
     {
         return [
             ExportColumn::make('order_number'),
+            ExportColumn::make('customer.name'),
             ExportColumn::make('order_date'),
             ExportColumn::make('total_price'),
-            ExportColumn::make('customer.name'),
+            ExportColumn::make('discount'),
+            ExportColumn::make('orderDetails.arrangement.name'),
+            ExportColumn::make('orderDetails.quantity'),
+            ExportColumn::make('orderDetails.unit_price'),
+            ExportColumn::make('orderDetails.sub_total'),
+            ExportColumn::make('payments.payment_date'),
+            ExportColumn::make('payments.total_payment'),
+            ExportColumn::make('payments.payment_method'),
+            ExportColumn::make('payments.payment_status'),
         ];
     }
 
