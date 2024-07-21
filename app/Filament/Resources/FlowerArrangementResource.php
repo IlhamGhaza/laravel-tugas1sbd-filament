@@ -39,7 +39,9 @@ class FlowerArrangementResource extends Resource
                     ->minLength(3),
                 FileUpload::make('image')
                         ->image()
-                        ->required(),
+                        ->disk('public'),
+                        // ->directory('flower_arrangements')
+                        // ->required()
                 TextInput::make('type')
                     ->required()
                     ->maxLength(255)
@@ -58,8 +60,9 @@ class FlowerArrangementResource extends Resource
                     ->required(),
                 TextInput::make('price')
                     ->required()
-                    ->numeric()
-                    ->minValue(10000),
+                    ->numeric()->placeholder('min : 1000')
+                    // ->maxValue()
+                    ->minValue(1000),
             ]);
     }
 
@@ -73,7 +76,9 @@ class FlowerArrangementResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 //image
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->disk('public')
+                    ->square(),
                 TextColumn::make('type')
                     ->searchable()
                     ->sortable()
