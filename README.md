@@ -10,7 +10,8 @@
   - [Installation](#installation)
   - [Filament Admin Template](#filament-admin-template)
   - [Features](#features)
-  - [ScreenShoot](#screenshoot)
+  - [Usage](#usage)
+  - [Case Example](#case-example)
   - [Contact](#contact)
   - [Contribution](#contribution)
   - [License](#license)
@@ -137,9 +138,13 @@ To install Filament, follow these steps:
 - Database seeder for initial admin user.
 - API with laravel-orion
 
-## ScreenShoot
+## Usage
 
-![ScreenShoot](public/screen.png)
+To use this project, follow the installation steps provided above. Once the application is running, you can access the admin panel at `http://127.0.0.1:8000/admin` using the credentials mentioned earlier.
+
+## Case Example
+
+For a detailed example of how to use this project, please refer to the [case example](contohkasus.md).
 
 ## Contact
 
@@ -152,4 +157,3 @@ If you wish to contribute to this project, please fork this repository and submi
 ## License
 
 This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. You may not use this project for commercial purposes. See the [LICENSE](LICENSE) file for more details.
-

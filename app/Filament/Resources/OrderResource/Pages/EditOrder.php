@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
+use App\Http\Controllers\OrderController;
 use App\Models\Customer;
 use App\Models\FlowerArrangement;
 use App\Models\Order;
@@ -18,71 +19,125 @@ class EditOrder extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Order
     {
-        return DB::transaction(function () use ($record, $data) {
-            $record->update([
-                'order_number' => $data['order_number'],
-                'customer_id' => $data['customer_id'],
-                'order_date' => $data['order_date'],
-                'total_price' => 0,
-                'discount' => 0,
-            ]);
+        //     return DB::transaction(function () use ($data) {
+        //         // Periksa apakah $data memiliki kunci 'order_id'
+        //         if (isset($data['order_id'])) {
+        //             // Temukan order berdasarkan 'order_id'
+        //             $order = Order::find($data['order_id']);
 
-            $totalPrice = 0;
+        //             if ($order) {
+        //                 // Jika order ditemukan, perbarui data
+        //                 $order->update([
+        //                     'order_number' => $data['order_number'] ?? $order->order_number,
+        //                     'customer_id' => $data['customer_id'] ?? $order->customer_id,
+        //                     'order_date' => $data['order_date'] ?? $order->order_date,
+        //                     'discount' => $data['discount'] ?? $order->discount,
+        //                 ]);
 
-            $record->orderDetails()->delete();
-            if (isset($data['orderDetails']) && is_array($data['orderDetails'])) {
-                foreach ($data['orderDetails'] as $detail) {
-                    $arrangement = FlowerArrangement::find($detail['arrangement_id']);
-                    $unitPrice = $arrangement->price;
-                    $subTotal = $detail['quantity'] * $unitPrice;
-                    $totalPrice += $subTotal;
+        //                 // Hapus order details lama dan tambahkan yang baru
+        //                 $order->orderDetails()->delete();
+        //                 if (isset($data['order_details'])) {
+        //                     foreach ($data['order_details'] as $detail) {
+        //                         $arrangement = FlowerArrangement::find($detail['arrangement_id']);
+        //                         $unit_price = $arrangement->price;
+        //                         $sub_total = $unit_price * $detail['quantity'];
 
-                    OrderDetail::create([
-                        'order_id' => $record->order_id,
-                        'arrangement_id' => $detail['arrangement_id'],
-                        'quantity' => $detail['quantity'],
-                        'unit_price' => $unitPrice,
-                        'sub_total' => $subTotal,
-                    ]);
-                }
-            }
+        //                         OrderDetail::create([
+        //                             'order_id' => $order->order_id,
+        //                             'arrangement_id' => $detail['arrangement_id'],
+        //                             'quantity' => $detail['quantity'],
+        //                             'unit_price' => $unit_price,
+        //                             'sub_total' => $sub_total,
+        //                         ]);
+        //                     }
+        //                 }
 
-            $customer = Customer::find($data['customer_id']);
-            if ($customer->status === 'regular') {
-                $discount = round($totalPrice * 0.1, 2);
-            } elseif ($customer->status === 'non-regular' && $totalPrice >= 1000000) {
-                $discount = round($totalPrice * 0.05, 2);
-            } else {
-                $discount = 0;
-            }
+        //                 // Update total price
+        //                 $order->calculateTotalPrice();
 
-            $totalPrice -= $discount;
+        //                 // Update payments
+        //                 $order->payments()->delete();
+        //                 if (isset($data['payments'])) {
+        //                     foreach ($data['payments'] as $payment) {
+        //                         $paymentRecord = $order->payments()->create($payment);
+        //                         $paymentRecord->total_payment = $order->total_price;
+        //                         $paymentRecord->save();
+        //                     }
+        //                 }
 
-            $record->total_price = $totalPrice;
-            $record->discount = $discount;
-            $record->save();
+        //                 // Update deliveries
+        //                 $order->deliveries()->delete();
+        //                 if (isset($data['deliveries'])) {
+        //                     foreach ($data['deliveries'] as $delivery) {
+        //                         $order->deliveries()->create($delivery);
+        //                     }
+        //                 }
+        //             } else {
+        //                 throw new \Exception('Order tidak ditemukan.');
+        //             }
+        //         } else {
+        //             // Jika 'order_id' tidak ada, buat order baru
+        //             $order = Order::create([
+        //                 'order_number' => $data['order_number'],
+        //                 'customer_id' => $data['customer_id'],
+        //                 'order_date' => $data['order_date'],
+        //                 'discount' => $data['discount'] ?? 0,
+        //                 'total_price' => 0,
+        //             ]);
 
-            $record->payments()->delete();
-            if (isset($data['payments']) && is_array($data['payments'])) {
-                foreach ($data['payments'] as $payment) {
-                    Payment::create([
-                        'order_id' => $record->order_id,
-                        'payment_date' => $payment['payment_date'],
-                        'total_payment' => $payment['total_payment'],
-                        'payment_method' => $payment['payment_method'],
-                        'payment_status' => $payment['payment_status'],
-                    ]);
-                }
-            }
+        //             // Create order details
+        //             if (isset($data['order_details'])) {
+        //                 foreach ($data['order_details'] as $detail) {
+        //                     $arrangement = FlowerArrangement::find($detail['arrangement_id']);
+        //                     $unit_price = $arrangement->price;
+        //                     $sub_total = $unit_price * $detail['quantity'];
 
-            $record->refresh();
+        //                     OrderDetail::create([
+        //                         'order_id' => $order->order_id,
+        //                         'arrangement_id' => $detail['arrangement_id'],
+        //                         'quantity' => $detail['quantity'],
+        //                         'unit_price' => $unit_price,
+        //                         'sub_total' => $sub_total,
+        //                     ]);
+        //                 }
+        //             }
 
-            // Debugging output
-            info("Order Update - Total Price: {$record->total_price}, Discount: {$record->discount}");
+        //             // Calculate total price
+        //             $order->calculateTotalPrice();
 
-            return $record;
+        //             // Create payments
+        //             if (isset($data['payments'])) {
+        //                 foreach ($data['payments'] as $payment) {
+        //                     $paymentRecord = $order->payments()->create($payment);
+        //                     $paymentRecord->total_payment = $order->total_price;
+        //                     $paymentRecord->save();
+        //                 }
+        //             }
+
+        //             // Create deliveries
+        //             if (isset($data['deliveries'])) {
+        //                 foreach ($data['deliveries'] as $delivery) {
+        //                     $order->deliveries()->create($delivery);
+        //                 }
+        //             }
+        //         }
+
+        //         return $order;
+        //     });
+        // }
+        return DB::transaction(function () use ($data) {
+            // Panggil metode penyimpanan di OrderController
+            $orderController = new OrderController();
+            $response = $orderController->store(new \Illuminate\Http\Request($data));
+
+            // Mengonversi respons JSON menjadi instance Order
+            $order = Order::findOrFail($response->getData()->data->order_id);
+
+            return $order;
         });
     }
+
+    // Ensure there's no code between the closing curly brace above and the next method
 
     public function getRedirectUrl(): string
     {

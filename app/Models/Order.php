@@ -52,32 +52,21 @@ class Order extends Model
 
         $this->total_price = max(0, $totalPrice - $this->discount);
         $this->save();
+
+        $this->updateTotalPayments();
     }
-    // protected static function booted()
+
+    protected function updateTotalPayments()
+    {
+        foreach ($this->payments as $payment) {
+            $payment->total_payment = $this->total_price;
+            $payment->save();
+        }
+    }
+    //  public function calculateTotalPayment()
     // {
-    //     static::saving(function ($order) {
-    //         $order->load('orderDetails', 'customer'); // Ensure order details and customer are loaded
-
-    //         $totalPrice = $order->orderDetails->sum('sub_total');
-
-    //         info('Total Price Before Discount: ' . $totalPrice);
-
-    //         if ($order->customer) {
-    //             if ($order->customer->status === 'regular') {
-    //                 $order->discount = round($totalPrice * 0.1, 2);
-    //             } elseif ($order->customer->status === 'non-regular' && $totalPrice >= 1000000) {
-    //                 $order->discount = round($totalPrice * 0.05, 2);
-    //             } else {
-    //                 $order->discount = 0;
-    //             }
-    //         } else {
-    //             $order->discount = 0;
-    //         }
-
-    //         $order->total_price = max(0, $totalPrice - $order->discount);
-
-    //         info("Order Calculation - Total Price: {$totalPrice}, Discount: {$order->discount}, Final Total Price: {$order->total_price}");
-    //     });
+    //     $this->total_payment = $this->total_price;
+    //     $this->save();
     // }
 
 }

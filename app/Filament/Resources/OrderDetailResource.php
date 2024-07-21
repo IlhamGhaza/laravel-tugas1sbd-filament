@@ -21,7 +21,7 @@ class OrderDetailResource extends Resource
     protected static ?string $model = OrderDetail::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
-    protected static ?string $navigationGroup = 'Order Manajement';
+    protected static ?string $navigationGroup = 'Order';
     protected static ?int $navigationSort = 6;
 
 

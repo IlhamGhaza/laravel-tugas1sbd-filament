@@ -36,28 +36,35 @@ class OrderResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form->schema([
+        return $form
+       ->schema([
             Forms\Components\Card::make()
-                ->schema([TextInput::make('order_number')->required(),
+                ->schema([
+                    TextInput::make('order_number')->required(),
                     Select::make('customer_id')->relationship('customer', 'name')->required(),
-                    DatePicker::make('order_date')->required(),
-                    TextInput::make('total_price')->numeric()->required(),
-                    TextInput::make('discount')->numeric()->default(0)])
-                        ->columns(2) // Arrange inputs in two columns
-                        ->label('Order'),
+                    DatePicker::make('order_date')->default(now())->required(),
+                    TextInput::make('total_price')->numeric()->default(0)->required()->disabled(),
+                    // ->disabled(),
+                    TextInput::make('discount')->numeric()->default(0)->disabled(),
+                    // ->disabled(),
+                ])
+                ->columns(2)
+                ->label('Order'),
 
             Forms\Components\Card::make()
                 ->schema([
                     Forms\Components\HasManyRepeater::make('orderDetails')
                         ->relationship('orderDetails')
-                        ->schema([Select::make('arrangement_id')->relationship('arrangement', 'name')->required()->multiple(),
+                        ->schema([
+                            Select::make('arrangement_id')->relationship('arrangement', 'name')->required(),
                             TextInput::make('quantity')->required(),
-                            TextInput::make('unit_price')->required(),
-                            TextInput::make('sub_total')->required()])
-                                ->collapsed(false) // Set to false to show expanded initially
-                                ->maxItems(1), // Limit to one item
+                            TextInput::make('unit_price')->default(0)->required()->disabled(),
+                            TextInput::make('sub_total')->default(0)->required()->disabled(),
+                        ])
+                        ->collapsed(false)
+                        ->maxItems(1),
                 ])
-                ->columns(1) // Arrange inputs in one column
+                ->columns(1)
                 ->label('Detail Order'),
 
             Forms\Components\Card::make()
@@ -65,14 +72,15 @@ class OrderResource extends Resource
                     Forms\Components\HasManyRepeater::make('payments')
                         ->relationship('payments')
                         ->schema([
-                            DatePicker::make('payment_date')->required(),
-                            TextInput::make('total_payment')->required(),
+                            DatePicker::make('payment_date')->default(now())->required(),
+                            TextInput::make('total_payment')->default(0)->required()->maxValue('999,999,999,999'),
                             Select::make('payment_method')
                                 ->options([
                                     'Cash' => 'Cash',
                                     'Transfer' => 'Transfer',
                                     'Debit Card' => 'Debit Card',
                                     'Credit Card' => 'Credit Card',
+                                    'Other' => 'Other',
                                 ])
                                 ->required(),
                             Select::make('payment_status')
@@ -82,33 +90,47 @@ class OrderResource extends Resource
                                 ])
                                 ->required(),
                         ])
-                        ->collapsed(false) // Set to false to show expanded initially
-                        ->maxItems(1), // Limit to one item
+                        ->collapsed(false)
+                        ->maxItems(1),
                 ])
-                ->columns(1) // Arrange inputs in one column
+                ->columns(1)
                 ->label('Pembayaran'),
+
+            Forms\Components\Card::make()
+                ->schema([
+                    Forms\Components\HasManyRepeater::make('deliveries')
+                        ->relationship('deliveries')
+                        ->schema([
+                            Select::make('customer_id')->relationship('customer', 'name'),
+                            TextInput::make('delivery_name')->maxLength(255)->minLength(3),
+                            TextInput::make('delivery_address')->maxLength(255)->minLength(10),
+                            DatePicker::make('delivery_date')->default(now())->required(),
+                            Select::make('courier_id')->relationship('courier', 'name')->required(),
+                        ])
+                        ->collapsed(false)
+                        ->maxItems(1),
+                ])
+                ->columns(1)
+                ->label('Detail Pengiriman'),
         ]);
+
+
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([
-                TextColumn::make('order_number')->sortable()->searchable()->toggleable(),
-                TextColumn::make('customer.name')->sortable()->searchable()->toggleable(),
-                TextColumn::make('order_date')->sortable()->toggleable(),
-                // ->DateColumn(),
-                TextColumn::make('total_price')->toggleable()->sortable()->formatStateUsing(fn(string $state): string => number_format($state, 2)),
-                TextColumn::make('discount')->toggleable()->sortable()->formatStateUsing(fn(string $state): string => number_format($state, 2)),
-            ])
+            ->columns([TextColumn::make('order_number')->sortable()->searchable()->toggleable(),
+            TextColumn::make('customer.name')->sortable()->searchable()->toggleable(),
+            TextColumn::make('order_date')->sortable()->toggleable(),
+            TextColumn::make('total_price')->toggleable()->sortable()->formatStateUsing(fn(string $state): string => number_format($state, 2)),
+            TextColumn::make('discount')->toggleable()->sortable()->formatStateUsing(fn(string $state): string => number_format($state, 2))])
             ->filters([
                 //
             ])
-            ->headerActions([
-                ExportAction::make()
-                    ->exporter(OrderExporter::class),
-            ])
+            ->headerActions([ExportAction::make()->exporter(OrderExporter::class)])
             ->actions([
+
                 Tables\Actions\Action::make('pdf')
                     ->label('PDF')
                     ->color('success')
@@ -132,9 +154,7 @@ class OrderResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make()]),
-                ExportBulkAction::make()->exporter(OrderExporter::class)]);
+            ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()]), ExportBulkAction::make()->exporter(OrderExporter::class)]);
     }
 
     public static function getRelations(): array
@@ -145,6 +165,7 @@ class OrderResource extends Resource
                 // RelationManagers\PaymentsRelationManager::class,
             ];
     }
+
 
     public static function getPages(): array
     {

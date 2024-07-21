@@ -50,5 +50,6 @@ class OrderDetail extends Model
             $orderDetail->order->calculateTotalPrice();
         });
     }
+    
 }
 
