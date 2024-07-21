@@ -11,11 +11,15 @@ class Delivery extends Model
     use HasFactory, SoftDeletes;
 
     protected $primaryKey = 'delivery_id';
-    protected $fillable = ['order_id', 'delivery_address', 'delivery_date', 'courier_id'];
+    protected $fillable = ['order_id', 'customer_id','delivery_name','delivery_address', 'delivery_date', 'courier_id'];
 
     public function order()
     {
         return $this->belongsTo(Order::class, 'order_id', 'order_id');
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 
     public function courier()

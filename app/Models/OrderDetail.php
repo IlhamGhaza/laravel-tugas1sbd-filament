@@ -24,7 +24,7 @@ class OrderDetail extends Model
         return $this->belongsTo(FlowerArrangement::class, 'arrangement_id');
     }
 
-     protected static function booted()
+    protected static function booted()
     {
         static::creating(function ($orderDetail) {
             $arrangement = $orderDetail->arrangement;
@@ -32,10 +32,22 @@ class OrderDetail extends Model
             $orderDetail->sub_total = $orderDetail->quantity * $orderDetail->unit_price;
         });
 
+        static::created(function ($orderDetail) {
+            $orderDetail->order->calculateTotalPrice();
+        });
+
         static::updating(function ($orderDetail) {
             $arrangement = $orderDetail->arrangement;
             $orderDetail->unit_price = $arrangement->price;
             $orderDetail->sub_total = $orderDetail->quantity * $orderDetail->unit_price;
+        });
+
+        static::updated(function ($orderDetail) {
+            $orderDetail->order->calculateTotalPrice();
+        });
+
+        static::deleted(function ($orderDetail) {
+            $orderDetail->order->calculateTotalPrice();
         });
     }
 }
