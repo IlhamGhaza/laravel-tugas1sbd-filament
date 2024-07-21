@@ -3,20 +3,25 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CustomerResource\Pages;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TextFilter;
+use Filament\Tables\Filters\DateRangeFilter;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+
 
 
 class CustomerResource extends Resource
@@ -79,12 +84,27 @@ class CustomerResource extends Resource
                 }),
             ])
             ->filters([
-                //status reguler, non-reguler
-                // SelectFilter::make('status')->options([
-                //     'regular' => 'Regular',
-                //     'non-regular' => 'Non-regular',
-                // ]),
+                SelectFilter::make('status')
+                ->options([
+                    'regular' => 'Regular',
+                    'non-regular' => 'Non-Regular',
+                ])
+                ->label('Status Pelanggan'),
 
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('created_from')
+                            ->label('From Date'),
+                        DatePicker::make('created_until')
+                            ->label('To Date'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query->when($data['created_from'], function ($query, $date) {
+                            $query->whereDate('created_at', '>=', $date);
+                        })->when($data['created_until'], function ($query, $date) {
+                            $query->whereDate('created_at', '<=', $date);
+                        });
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
