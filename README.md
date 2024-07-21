@@ -5,11 +5,11 @@
 - [Laravel-tugas1sbd-filament](#laravel-tugas1sbd-filament)
   - [Table of Contents](#table-of-contents)
   - [Description](#description)
+  - [Features](#features) 
   - [Database Schema](#database-schema)
   - [About Laravel](#about-laravel)
   - [Installation](#installation)
   - [Filament Admin Template](#filament-admin-template)
-  - [Features](#features)
   - [Usage](#usage)
   - [Case Example](#case-example)
   - [Contact](#contact)
@@ -21,6 +21,14 @@
 Proyek ini adalah implementasi dari tugas pertama Sistem Basis Data (SBD) menggunakan Laravel. Untuk detail lebih lanjut tentang kasus yang diangkat dalam tugas ini, silakan lihat [contoh kasus](contohkasus.md).
 
 This project is an implementation of the first Database Systems (SBD) assignment using Laravel. For more details about the case study, please refer to [case example](contohkasus.md).
+
+## Features
+
+- CRUD (Create, Read, Update, Delete) operations for the main entity.
+- User input validation.
+- Middleware for user authentication.
+- Admin panel using Filament template.
+- Database seeder for initial admin user.
 
 ## Database Schema
 
@@ -128,15 +136,6 @@ To install Filament, follow these steps:
     ```
 
    For beginners looking for a step-by-step guide, check out this [tutorial video for beginner](https://youtube.com/playlist?list=PLqDySLfPKRn6fgrrdg4_SmsSxWzVlUQJo&si=GhXQaFVjgIB1pSbu)
-
-## Features
-
-- CRUD (Create, Read, Update, Delete) operations for the main entity.
-- User input validation.
-- Middleware for user authentication.
-- Admin panel using Filament template.
-- Database seeder for initial admin user.
-- API with laravel-orion
 
 ## Usage
 
