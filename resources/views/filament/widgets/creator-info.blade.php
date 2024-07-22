@@ -39,8 +39,8 @@
                 untuk menciptakan solusi inovatif dan bermanfaat bagi komunitas. Anda dapat mengetahui lebih banyak tentang saya
                 dan proyek-proyek saya melalui tautan berikut:</p><br>
             <ul class="mt-4 space-y-2">
-                <li>🔗 <a href="https://github.com/your-github" class="link-blue">GitHub</a></li>
-                <li>💼 <a href="https://linkedin.com/in/your-linkedin" class="link-green">LinkedIn</a></li>
+                <li>🔗 <a href="https://github.com/IlhamGhaza" class="link-blue">GitHub</a></li>
+                <li>💼 <a href=https://www.linkedin.com/in/muhammadilhamghazali/" class="link-green">LinkedIn</a></li>
                 {{-- <li>📘 <a href="https://your-website.com" class="link-purple">Blog Pribadi</a>: Baca artikel dan tutorial
                     yang saya tulis tentang pengembangan perangkat lunak, teknologi, dan lain-lain.</li> --}}
                 <li>🐦 <a href="https://twitter.com/your-twitter" class="link-orange">Twitter</a></li>

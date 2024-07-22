@@ -39,10 +39,10 @@
 
             <ul class="mt-4 space-y-2">
                 <li>🧡 <a href="https://patreon.com/your-patreon" class="link-orange">Sponsori saya di Patreon</a></li>
-                <li>⭐ <a href="https://github.com/your-github" class="link-blue">Ikuti dan star repository kami</a></li>
-                <li>🐛 <a href="https://github.com/your-github/issues" class="link-green">Laporkan bug atau masalah</a></li>
-                <li>🗣️ <a href="https://github.com/your-github" class="link-purple">Bantu terjemahkan paket kami</a></li>
-                <li>🔧 <a href="https://github.com/your-github" class="link-blue">Mintalah fitur baru atau bantu saya
+                <li>⭐ <a href="https://github.com/IlhamGhaza/laravel-tugas1sbd-filament" class="link-blue">Ikuti dan star repository kami</a></li>
+                <li>🐛 <a href="https://github.com/IlhamGhaza/laravel-tugas1sbd-filament/issues" class="link-green">Laporkan bug atau masalah</a></li>
+                <li>🗣️ <a href="https://github.com/IlhamGhaza/laravel-tugas1sbd-filament" class="link-purple">Bantu terjemahkan paket kami</a></li>
+                <li>🔧 <a href="https://github.com/IlhamGhaza/laravel-tugas1sbd-filament" class="link-blue">Mintalah fitur baru atau bantu saya
                         menyelesaikan satu</a></li>
             </ul>
         </div>
