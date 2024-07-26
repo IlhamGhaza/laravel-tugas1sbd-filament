@@ -6,5 +6,6 @@ use Filament\Widgets\Widget;
 
 class DonationInfo extends Widget
 {
+    // protected static ?int $sort = 1;
     protected static string $view = 'filament.widgets.donation-info';
 }

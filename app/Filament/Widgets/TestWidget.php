@@ -3,39 +3,29 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Customer;
+use App\Models\Order;
 use Filament\Support\Enums\IconPosition;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Widgets\StatsOverviewWidget\Card;
+
 
 class TestWidget extends BaseWidget
 {
+    protected static ?int $sort = 2;
+
     protected function getStats(): array
     {
         return [
-            //
-            // Stat::make('New Customer',Customer::count() )
-            //     ->description('New Customer has joined')
-            //     ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
-            //     ->color('success')
-            //     ->chart([
-            //         Customer::all()
-            //         ->groupBy(fn($customer) => $customer->created_at->format('M'))
-            //             ->map(fn($customers) => $customers->count())
-            //             ->toArray(
-
-            //         )]
-            //     )
-
-            Stat::make('New Customer', Customer::query()->where('created_at', 'deleted_at')->count())
-                ->description('New Customer has joined')
-                ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
-                ->color('success'),
-
-            //  Stat::make('New Customer', Customer::query()->where('created_at', 'deleted_at')->count())
-            //     ->description('New Customer has joined')
-            //     ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
-            //     ->color('success'),
-
+           Stat::make('Total Customers', Customer::count())
+                ->description('All registered customers')
+                ->descriptionIcon('heroicon-o-users'),
+            Stat::make('Total Orders', Order::count())
+                ->description('All orders placed')
+                ->descriptionIcon('heroicon-o-shopping-cart'),
+            Stat::make('Total Revenue', Order::sum('total_price'))
+                ->description('Total revenue generated')
+                ->descriptionIcon('heroicon-o-currency-dollar'),
         ];
     }
 }
