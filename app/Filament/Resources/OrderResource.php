@@ -38,7 +38,9 @@ class OrderResource extends Resource
     {
         return $form
        ->schema([
-            Forms\Components\Card::make()
+
+            Forms\Components\Section::make('Order')
+                ->description('Put the Order')
                 ->schema([
                     TextInput::make('order_number')->required(),
                     Select::make('customer_id')->relationship('customer', 'name')->required(),
@@ -48,10 +50,10 @@ class OrderResource extends Resource
                     TextInput::make('discount')->numeric()->default(0)->disabled(),
                     // ->disabled(),
                 ])
-                ->columns(2)
-                ->label('Order'),
+                ->columns(2),
 
-            Forms\Components\Card::make()
+            Forms\Components\Section::make('Order Detail')
+                ->description('Put the Detail Order')
                 ->schema([
                     Forms\Components\HasManyRepeater::make('orderDetails')
                         ->relationship('orderDetails')
@@ -61,13 +63,15 @@ class OrderResource extends Resource
                             TextInput::make('unit_price')->default(0)->required()->disabled(),
                             TextInput::make('sub_total')->default(0)->required()->disabled(),
                         ])
+                        ->columns(2)
+                        ->columnSpan('full')
                         ->collapsed(false)
-                        ->maxItems(1),
+                        ->maxItems(1)
                 ])
-                ->columns(1)
-                ->label('Detail Order'),
+                ->columns(1),
 
-            Forms\Components\Card::make()
+            Forms\Components\Section::make('Payment')
+                ->description('Put the Payment')
                 ->schema([
                     Forms\Components\HasManyRepeater::make('payments')
                         ->relationship('payments')
@@ -90,13 +94,15 @@ class OrderResource extends Resource
                                 ])
                                 ->required(),
                         ])
+                        ->columns(2)
+                        ->columnSpan('full')
                         ->collapsed(false)
-                        ->maxItems(1),
+                        ->maxItems(1)
                 ])
-                ->columns(1)
-                ->label('Pembayaran'),
+                ->columns(1),
 
-            Forms\Components\Card::make()
+            Forms\Components\Section::make('Delivery')
+                ->description('Put the Detail Delivery')
                 ->schema([
                     Forms\Components\HasManyRepeater::make('deliveries')
                         ->relationship('deliveries')
@@ -107,11 +113,12 @@ class OrderResource extends Resource
                             DatePicker::make('delivery_date')->default(now())->required(),
                             Select::make('courier_id')->relationship('courier', 'name')->required(),
                         ])
+                        ->columns(2)
+                        ->columnSpan('full')
                         ->collapsed(false)
-                        ->maxItems(1),
+                        ->maxItems(1)
                 ])
                 ->columns(1)
-                ->label('Detail Pengiriman'),
         ]);
 
 
