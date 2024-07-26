@@ -77,7 +77,7 @@ class OrderResource extends Resource
                         ->relationship('payments')
                         ->schema([
                             DatePicker::make('payment_date')->default(now())->required(),
-                            TextInput::make('total_payment')->default(0)->required()->maxValue('999,999,999,999'),
+                            TextInput::make('total_payment')->default(0)->required()->disabled(),
                             Select::make('payment_method')
                                 ->options([
                                     'Cash' => 'Cash',
