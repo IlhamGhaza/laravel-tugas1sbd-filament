@@ -9,6 +9,8 @@ use Flowframe\Trend\TrendValue;
 
 class TestChartWidget extends ChartWidget
 {
+    protected static ?int $sort = 3;
+
     protected static ?string $heading = 'Orders per month';
 
     protected function getData(): array
@@ -29,7 +31,9 @@ class TestChartWidget extends ChartWidget
             ],
             'labels' => $data->map(fn (TrendValue $value) => $value->date),
         ];
+
         
+
     }
 
     protected function getType(): string
