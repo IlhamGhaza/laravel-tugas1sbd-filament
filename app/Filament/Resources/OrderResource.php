@@ -43,7 +43,7 @@ class OrderResource extends Resource
                 ->description('Put the Order')
                 ->schema([
                     TextInput::make('order_number')->required(),
-                    Select::make('customer_id')->relationship('customer', 'name')->required(),
+                    Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload()->required(),
                     DatePicker::make('order_date')->default(now())->required(),
                     TextInput::make('total_price')->numeric()->default(0)->required()->disabled(),
                     // ->disabled(),
@@ -58,7 +58,11 @@ class OrderResource extends Resource
                     Forms\Components\HasManyRepeater::make('orderDetails')
                         ->relationship('orderDetails')
                         ->schema([
-                            Select::make('arrangement_id')->relationship('arrangement', 'name')->required(),
+                            Select::make('arrangement_id')
+                            ->relationship('arrangement', 'name')
+                            ->multiple()
+                            ->searchable()->preload()
+                            ->required(),
                             TextInput::make('quantity')->required(),
                             TextInput::make('unit_price')->default(0)->required()->disabled(),
                             TextInput::make('sub_total')->default(0)->required()->disabled(),
@@ -86,6 +90,7 @@ class OrderResource extends Resource
                                     'Credit Card' => 'Credit Card',
                                     'Other' => 'Other',
                                 ])
+                                ->searchable()->preload()
                                 ->required(),
                             Select::make('payment_status')
                                 ->options([
@@ -107,11 +112,11 @@ class OrderResource extends Resource
                     Forms\Components\HasManyRepeater::make('deliveries')
                         ->relationship('deliveries')
                         ->schema([
-                            Select::make('customer_id')->relationship('customer', 'name'),
+                            Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload(),
                             TextInput::make('delivery_name')->maxLength(255)->minLength(3),
                             TextInput::make('delivery_address')->maxLength(255)->minLength(10),
                             DatePicker::make('delivery_date')->default(now())->required(),
-                            Select::make('courier_id')->relationship('courier', 'name')->required(),
+                            Select::make('courier_id')->relationship('courier', 'name')->required()->searchable()->preload(),
                         ])
                         ->columns(2)
                         ->columnSpan('full')
