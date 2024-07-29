@@ -44,7 +44,9 @@ class OrderResource extends Resource
                 ->schema([
                     TextInput::make('order_number')->required(),
                     Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload()->required(),
-                    DatePicker::make('order_date')->default(now())->required(),
+                    DatePicker::make('order_date')->default(now())
+                    ->native(false)
+                    ->required(),
                     TextInput::make('total_price')->numeric()->default(0)->required()->disabled(),
                     // ->disabled(),
                     TextInput::make('discount')->numeric()->default(0)->disabled(),
@@ -80,7 +82,7 @@ class OrderResource extends Resource
                     Forms\Components\HasManyRepeater::make('payments')
                         ->relationship('payments')
                         ->schema([
-                            DatePicker::make('payment_date')->default(now())->required(),
+                            DatePicker::make('payment_date')->default(now())->native(false)->required(),
                             TextInput::make('total_payment')->default(0)->required()->disabled(),
                             Select::make('payment_method')
                                 ->options([
@@ -115,7 +117,7 @@ class OrderResource extends Resource
                             Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload(),
                             TextInput::make('delivery_name')->maxLength(255)->minLength(3),
                             TextInput::make('delivery_address')->maxLength(255)->minLength(10),
-                            DatePicker::make('delivery_date')->default(now())->required(),
+                            DatePicker::make('delivery_date')->default(now())->native(false)->required(),
                             Select::make('courier_id')->relationship('courier', 'name')->required()->searchable()->preload(),
                         ])
                         ->columns(2)
