@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Maatwebsite\Excel\Facades\Excel;
 use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ViewAction;
 
 class OrderResource extends Resource
 {
@@ -46,7 +47,7 @@ class OrderResource extends Resource
                     Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload()->required(),
                     DatePicker::make('order_date')->default(now())
                     ->native(false)
-                    ->displayFormat('d/m/y')
+                    ->displayFormat('d/m/Y')
                     ->required(),
                     TextInput::make('total_price')->numeric()->default(0)->required()->disabled(),
                     // ->disabled(),
@@ -83,7 +84,7 @@ class OrderResource extends Resource
                     Forms\Components\HasManyRepeater::make('payments')
                         ->relationship('payments')
                         ->schema([
-                            DatePicker::make('payment_date')->default(now())->native(false)->displayFormat('d/m/y')->required(),
+                            DatePicker::make('payment_date')->default(now())->native(false)->displayFormat('d/m/Y')->required(),
                             TextInput::make('total_payment')->default(0)->required()->disabled(),
                             Select::make('payment_method')
                                 ->options([
@@ -118,7 +119,7 @@ class OrderResource extends Resource
                             Select::make('customer_id')->relationship('customer', 'name')->searchable()->preload(),
                             TextInput::make('delivery_name')->maxLength(255)->minLength(3),
                             TextInput::make('delivery_address')->maxLength(255)->minLength(10),
-                            DatePicker::make('delivery_date')->default(now())->native(false)->displayFormat('d/m/y')->required(),
+                            DatePicker::make('delivery_date')->default(now())->native(false)->displayFormat('d/m/Y')->required(),
                             Select::make('courier_id')->relationship('courier', 'name')->required()->searchable()->preload(),
                         ])
                         ->columns(2)
@@ -165,7 +166,7 @@ class OrderResource extends Resource
                             )->stream();
                         }, $record->order_number . '-order.pdf');
                     }),
-
+                ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
