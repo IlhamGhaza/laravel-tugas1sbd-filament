@@ -18,10 +18,9 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
-
 
 
 class CustomerResource extends Resource
@@ -109,6 +108,12 @@ class CustomerResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
+                ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Customer Deleted')
+                        ->body('Customer deleted successfully')
+                ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

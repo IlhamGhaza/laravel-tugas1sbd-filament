@@ -5,6 +5,8 @@ namespace App\Filament\Resources\DeliveryResource\Pages;
 use App\Filament\Resources\DeliveryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Notifications\Notification;
+
 
 class EditDelivery extends EditRecord
 {
@@ -19,5 +21,12 @@ class EditDelivery extends EditRecord
     public function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+    protected function getSavedNotification(): Notification|null
+    {
+        return Notification::make()
+            ->success()
+            ->title('Delivery updated.')
+            ->body('Delivery has been updated successfully.');
     }
 }

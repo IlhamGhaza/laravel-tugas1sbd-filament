@@ -13,6 +13,7 @@ use Filament\Resources\Pages\CreateRecord;
 use App\Http\Controllers\OrderController;
 use App\Http\Requests\StoreOrderRequest;
 use Illuminate\Http\Request;
+use Filament\Notifications\Notification;
 
 
 class CreateOrder extends CreateRecord
@@ -21,7 +22,7 @@ class CreateOrder extends CreateRecord
 
     protected function handleRecordCreation(array $data): Order
     {
-       return DB::transaction(function() use ($data) {
+        return DB::transaction(function () use ($data) {
             // Panggil metode penyimpanan di OrderController
             $orderController = new OrderController();
             $response = $orderController->store(new \Illuminate\Http\Request($data));
@@ -100,5 +101,11 @@ class CreateOrder extends CreateRecord
     public function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+    protected function getCreatedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->title('Order Created')
+            ->body('Order has been successfully created.');
     }
 }

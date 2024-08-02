@@ -13,6 +13,7 @@ use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Filament\Pages\Actions;
+use Filament\Notifications\Notification;
 
 
 class EditOrder extends EditRecord
@@ -50,5 +51,12 @@ class EditOrder extends EditRecord
     public function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+    protected function getSavedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->title('Order updated')
+            ->body('The order has been updated successfully.')
+            ->success();
     }
 }

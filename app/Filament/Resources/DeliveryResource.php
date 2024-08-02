@@ -22,6 +22,8 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
+use Filament\Notifications\Notification;
+
 
 class DeliveryResource extends Resource
 {
@@ -99,7 +101,13 @@ class DeliveryResource extends Resource
                         },  $record->order->order_number.'-Delivery-detail.pdf');
                     }),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                 ->successNotification(
+                    Notification::make()
+                        ->title('Delivery Deleted')
+                        ->message('Delivery has been deleted successfully.')
+                        ->success()
+                ),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([
                 Tables\Actions\DeleteBulkAction::make()]),

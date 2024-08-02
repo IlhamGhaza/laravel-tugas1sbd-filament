@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 use Maatwebsite\Excel\Facades\Excel;
 use Filament\Tables\Actions\ExportAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ViewAction;
 
 class OrderResource extends Resource
@@ -168,7 +169,13 @@ class OrderResource extends Resource
                     }),
                 ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                 ->successNotification(
+                    Notification::make()
+                        ->success()
+                        ->title('Customer Deleted')
+                        ->body('Customer deleted successfully')
+                ),
             ])
             ->bulkActions([Tables\Actions\BulkActionGroup::make([Tables\Actions\DeleteBulkAction::make()]), ExportBulkAction::make()->exporter(OrderExporter::class)]);
     }
