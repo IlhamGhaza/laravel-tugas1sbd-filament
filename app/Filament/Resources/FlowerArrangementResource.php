@@ -3,31 +3,28 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\FlowerArrangementResource\Pages;
-use App\Filament\Resources\FlowerArrangementResource\RelationManagers;
 use App\Models\FlowerArrangement;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Notifications\Notification;
-
-
 
 class FlowerArrangementResource extends Resource
 {
     protected static ?string $model = FlowerArrangement::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
-    protected static ?string $navigationGroup = 'Warehouse';
-    protected static ?int $navigationSort = 4;
 
+    protected static ?string $navigationGroup = 'Warehouse';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -39,10 +36,10 @@ class FlowerArrangementResource extends Resource
                     ->maxLength(255)
                     ->minLength(3),
                 FileUpload::make('image')
-                        ->image()
-                        ->disk('public'),
-                        // ->directory('flower_arrangements')
-                        // ->required()
+                    ->image()
+                    ->disk('public'),
+                // ->directory('flower_arrangements')
+                // ->required()
                 TextInput::make('type')
                     ->required()
                     ->maxLength(255)
@@ -95,6 +92,7 @@ class FlowerArrangementResource extends Resource
                     ->toggleable(),
                 TextColumn::make('price')
                     ->searchable()
+                    ->currency('idr', 'IDR')
                     ->sortable()
                     ->toggleable(),
             ])
@@ -120,12 +118,12 @@ class FlowerArrangementResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make()
-                ->successNotification(
-                    Notification::make()
-                        ->title('Flower Arrangement Deleted')
-                        ->message('Flower Arrangement has been deleted successfully.')
-                       ->success()
-                ),
+                    ->successNotification(
+                        Notification::make()
+                            ->title('Flower Arrangement Deleted')
+                            ->body('Flower Arrangement has been deleted successfully.')
+                            ->success()
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

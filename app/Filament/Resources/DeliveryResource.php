@@ -105,7 +105,7 @@ class DeliveryResource extends Resource
                  ->successNotification(
                     Notification::make()
                         ->title('Delivery Deleted')
-                        ->message('Delivery has been deleted successfully.')
+                        ->body('Delivery has been deleted successfully.')
                         ->success()
                 ),
             ])

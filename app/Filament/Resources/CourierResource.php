@@ -66,7 +66,7 @@ class CourierResource extends Resource
                 ->successNotification(
                     Notification::make()
                         ->title('Courier Deleted')
-                        ->message('Courier has been deleted successfully.')
+                        ->body('Courier has been deleted successfully.')
                         ->color('success')
                 ),
             ])

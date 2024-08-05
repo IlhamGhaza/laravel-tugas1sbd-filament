@@ -87,7 +87,7 @@ class UserResource extends Resource
                 ->successNotification(
                     Notification::make()
                         ->title('User Deleted')
-                        ->message('User has been deleted successfully.')
+                        ->body('User has been deleted successfully.')
                         ->success()
                 ),
             ])
